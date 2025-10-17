@@ -1,0 +1,154 @@
+;; defsrc is still necessary
+(defcfg
+  process-unmapped-keys true
+  movemouse-inherit-accel-state yes
+  movemouse-smooth-diagonals yes
+)
+
+
+(defsrc
+  esc   f1   f2   f3   f4   f5   f6   f7   f8   f9   f10  f11  f12
+  grv   1    2    3    4    5    6    7    8    9    0    -    =     bspc    home
+  tab   q    w    e    r    t    y    u    i    o    p    [    ]     \       del
+  caps  a    s    d    f    g    h    j    k    l    ;    '     ret          pgup
+  lsft  z    x    c    v    b    n    m    ,    .    /     rsft     up
+  lctl  lmet lalt           spc               ralt  rmet  rctl left down right
+)
+
+(defvar
+  tap-time 200
+  hold-time 250
+  hold-time-slow 350
+)
+
+(defalias
+  ;; REMAPS
+  cape (tap-hold $tap-time $hold-time esc (layer-toggle arrows))
+  ent (tap-hold $tap-time $hold-time ' enter)
+  [ (tap-hold $tap-time $hold-time [ bspc)
+  hbspc (macro-repeat 90 C-bspc)
+  mbspc (tap-hold $tap-time $hold-time bspc @hbspc)
+  uns (multi S--)
+
+  ;; MACROS
+  enmo (macro S-RS-(20 c))
+  enmog (macro S-RS-(20 g))
+  ;; vup (macro-repeat A-up)
+  ;; vdw (macro-repeat A-down)
+  spo (macro A-S-C-p M-d M-d A-S-C-s)
+
+  ;; HOME ROW MODS
+  a (tap-hold $tap-time $hold-time a lmet)
+  s (tap-hold $tap-time $hold-time s lsft)
+  d (tap-hold $tap-time $hold-time d lctl)
+  f (tap-hold $tap-time $hold-time-slow f lalt)
+
+  j (tap-hold $tap-time $hold-time-slow j ralt)
+  k (tap-hold $tap-time $hold-time k rctl)
+  l (tap-hold $tap-time $hold-time l rsft)
+  ; (tap-hold $tap-time $hold-time ; rmet)
+
+  c (tap-hold $tap-time $hold-time c C-c)
+  v (tap-hold $tap-time $hold-time v C-v)
+
+  obr (tap-hold $tap-time $hold-time [ S-[)
+  cbr (tap-hold $tap-time $hold-time ] S-])
+  fsl (tap-hold $tap-time $hold-time \ S-\)
+
+
+  ap (tap-hold $tap-time $hold-time ' S-')
+
+  co (tap-hold $tap-time $hold-time , S-,)
+  fu (tap-hold $tap-time $hold-time . S-.)
+  bsl (tap-hold $tap-time $hold-time / S-/)
+
+  ;; Media Controls
+  nex A-right
+  prv A-left
+  vup A-up
+  vdw A-down
+  pp C-spc
+
+  ;; MULTI ACTIONS
+  mov (multi (layer-switch mouse) f13)
+  movh (multi (layer-switch mouse) f14)
+  1shot (multi n (layer-switch base))
+  capb (multi esc (layer-switch base))
+
+  ;; LAYERS 
+  bse (layer-switch base)
+  gam (layer-switch gaming)
+  mos (layer-switch mouse)
+  arr (layer-toggle arrows)
+  num (layer-toggle num)
+  wm (layer-toggle wm)
+  moa (layer-toggle media)
+
+  mntoh (tap-hold $tap-time $hold-time f14 @mov)
+  lam (tap-hold $tap-time $hold-time f3 @moa)
+  fwm (tap-hold $tap-time $hold-time f9 @num)
+  spc (tap-hold $tap-time $hold-time spc @wm)
+)
+
+(deflayer base
+  _      _    _    _    _    _    _    _    _    _    _    _    _
+  XX     XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   f16    f17
+  _      _    _    _    _    _    _    _    _    _    _    @obr @cbr @fsl   del
+  @cape  @a   @s   @d   @f   _    _    @j   @k   @l   @;   @ap  _           f18
+  @lam   _    _    @c   @v   _    _    _    @co  @fu  @bsl   @mbspc   _
+  @mntoh     f7    @fwm           @spc           f10  _    _      _  _  _
+)
+
+(deflayer arrows
+  _     _    _    _    _    _    _    _    _    _    _    _    _
+  XX    XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX     XX    f17
+  _     _    _    _    _    _    _    _    _    _    _    _    _      _     del
+  _     @a   @s   @d   @f   _    left down up  right _    _    _            f18
+  @lam  _    _    _    _    _    _    _    _   _     _   bspc         XX
+  _    f7   @fwm              @spc          _    _    _           XX XX XX
+)
+
+(deflayer num
+  _      _    _    _    _    _    _    _    _    _    _    _    @gam
+  XX     XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX     @capb       f17
+  _      _    _    _    @uns A-M-C-t   _    7    8    9    _    _    _    _        del
+  @cape  @a   @s   @d   .    `         -    4    5    6    +    =    _             f18
+  @lam   0    _    ,    S-\  \         @uns 1    2    3    0     bspc XX
+  @capb       f7    @fwm          @spc              _    _    _   XX XX XX
+)
+
+(deflayer wm
+  _      _         _        _        _     _    _    _    _    _    _    _    @gam
+  XX     XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX     @capb                          f17
+  _      M-c       A-S-C-w  A-S-C-e  A-S-r   A-S-C-t  A-S-e      _    _    _     XX  @[   _    _      del
+  @cape  _         @spo     M-d      _       A-4      A-S-C-g    _    _    A-S-C-;   _    _    _      f18
+  @lam   _         _        A-S-C-d  _       A-S-C-b  _          _    _    _    _    bspc    XX
+  @capb       f7    @fwm           @spc              _    _    _                         XX XX XX
+)
+
+(deflayer gaming
+  esc   f1   f2   f3   f4   f5   f6   f7   f8   f9   f10  f11  @bse
+  grv   1    2    3    4    5    6    7    8    9    0    -    =     XX     f17
+  tab   q    w    e    r    t    y    u    i    o    p    [    ]     \      del
+  lctl  a    s    d    f    g    h    j    k    l    ;    '     ret         f18
+  lsft  z    x    c    v    b    n    m    ,    .    /     bspc   _
+  f3    f7  lalt           spc               ralt  rmet  rctl  _ _ _
+)
+
+(deflayer mouse
+  _     _    _    _    _    _    _    _    _    _    _    _    @gam
+  XX    XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   _  @capb     f17
+  _     _    _    _    _    _    _    _    _    _    _    @[   _    _       del
+  @capb _    _    _    _    _    _    _    _    _    _    _    _            f18
+  @lam  _    _    _    _    _    @1shot    _    _    _    _    bspc   XX
+  @capb      f7    @fwm           _              _    _    _      XX XX XX
+)
+
+(deflayer media
+  _     _    _    _    _    _    _    _    _    _    _    _    @gam
+  XX    XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX     f17
+  _     _    f23  @vup f21  _    prev vold volu next pp   _    _    _      del
+  @cape _    @prv @vdw @nex f20  @prv @vdw @vup @nex f23  _    _           f18
+  @lam  _    _    _    _    _    _    mute  _    _    _    bspc       XX
+  _       f7    @fwm           @pp              _    _    _       XX XX XX
+)
