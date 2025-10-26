@@ -63,11 +63,11 @@
   bsl (tap-hold $tap-time $hold-time / S-/)
 
   ;; Media Controls
-  nex A-right
-  prv A-left
-  vup A-up
-  vdw A-down
-  pp C-spc
+  nex M-right
+  prv M-left
+  vup M-up
+  vdw M-down
+  pp M-S-C-p
 
   ;; MULTI ACTIONS
   mov (multi (layer-switch mouse) f13)
@@ -121,7 +121,7 @@
   _      _         _        _        _     _    _    _    _    _    _    _    @gam
   XX     XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX     @capb                          f17
   _      M-c       A-S-C-w  A-S-C-e  A-S-r   A-S-C-t  A-S-e      _    _    _     XX  @[   _    _      del
-  @cape  _         @spo     M-d      _       A-4      A-S-C-g    _    _    A-S-C-;   _    _    _      f18
+  @cape  _         A-S-C-t     M-d      _       A-4      A-S-C-g    _    _    A-S-C-;   _    _    _      f18
   @lam   _         _        A-S-C-d  _       A-S-C-b  _          _    _    _    _    bspc    XX
   @capb       f7    @fwm           @spc              _    _    _                         XX XX XX
 )
