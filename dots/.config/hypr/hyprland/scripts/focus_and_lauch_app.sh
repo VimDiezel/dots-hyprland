@@ -134,7 +134,7 @@ check_dependencies() {
 # Application handlers (equivalent to your AutoHotkey hotkeys)
 launch_wezterm() {
   # Match WezTerm with specific title (exact match)
-  handle_app "org.wezfurlong.wezterm:WezTerm(P)" "export WEZTERM_WORKSPACE=Home_P && wezterm start --always-new-process"
+  handle_app "WezTerm(P):WezTerm(P)" "export WEZTERM_WORKSPACE=Home_P && wezterm start --class 'WezTerm(P)' --always-new-process"
 }
 
 launch_discord() {
