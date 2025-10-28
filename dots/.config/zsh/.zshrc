@@ -6,6 +6,13 @@ export EDITOR='nvim'
 export BROWSER='zen-browser'
 export PATH="$PATH:/home/vimdiesel/.cargo/bin"
 
+export FZF_DEFAULT_OPTS="
+	--color=fg:#908caa,hl:#ebbcba
+	--color=fg+:#e0def4,hl+:#ebbcba
+	--color=border:#403d52,header:#31748f,gutter:#191724
+	--color=spinner:#f6c177,info:#9ccfd8
+	--color=pointer:#c4a7e7,marker:#eb6f92,prompt:#908caa"
+
 pokeget --hide-name shellder
 
 eval "$(starship init zsh)"
@@ -14,6 +21,20 @@ eval "$(starship init zsh)"
 function clear-shell() {
   clear
   pokeget --hide-name shellder
+}
+
+# fzf + cd
+fcd() {
+  local dir
+  dir=$(fd --type d --hidden --exclude .git . "$HOME" \
+    | sed "s|^$HOME|~|" \
+    | fzf --border \
+      --prompt="📁 ~ > " \
+      --preview 'eza -lah --icons --color=always --group-directories-first --git $(echo {} | sed "s|^~|$HOME|")' \
+      --preview-window=right:50%:wrap \
+      --bind 'ctrl-/:toggle-preview') || return
+  cd "${dir/#\~/$HOME}" || return
+  clear-shell
 }
 
 # Create a ZLE widget that injects the command and presses Enter
@@ -32,16 +53,11 @@ autoload -Uz compinit
 
 local zcompdump="$HOME/.config/zsh/zcompdump"
 
-if [[ -n "$zcompdump"(#qN.mh+24) ]]; then
-    compinit -i -d "$zcompdump"
-else
-    compinit -C -d "$zcompdump"
-fi
+compinit -i -d "$zcompdump"
 
-if [[ ! -f "${zcompdump}.zwc" || "$zcompdump" -nt "${zcompdump}.zwc" ]]; then
-    zcompile -U "$zcompdump"
+if [[ ! -f "${zcompdump}.zwc" ]]; then
+  zcompile -U "$zcompdump" &!
 fi
-
 
 autoload -Uz add-zsh-hook
 autoload -Uz vcs_info
@@ -125,8 +141,8 @@ alias vim="nvim"
 alias cat="bat --theme=base16"
 alias ls='eza --icons=always --color=always -a'
 alias ll='eza --icons=always --color=always -la'
-alias wt-p='export WEZTERM_WORKSPACE=Home_P && wezterm start --always-new-process'
-alias wt-t='export WEZTERM_WORKSPACE=Home_T && wezterm start --always-new-process'
+alias wt-p='export WEZTERM_WORKSPACE=Home_P && wezterm start --class "WezTerm(P)" --always-new-process'
+alias wt-t='export WEZTERM_WORKSPACE=Home_T && wezterm start --class "WezTerm(T)" --always-new-process'
 
 #  ┌─┐┬ ┬┌┬┐┌─┐  ┌─┐┌┬┐┌─┐┬─┐┌┬┐
 #  ├─┤│ │ │ │ │  └─┐ │ ├─┤├┬┘ │
