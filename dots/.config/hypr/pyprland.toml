@@ -6,8 +6,8 @@ plugins = [
 
 # [scratchpads.term]
 # animation = "fromTop"
-# command = "kitty --class kitty-dropterm"
-# class = "kitty-dropterm"
+# command = "wezterm start --class 'wezterm-dropterm'"
+# class = "wezterm-dropterm"
 # size = "65% 35%"
 # max_size = "1920px 100%"
 # offset = 700
@@ -15,8 +15,8 @@ plugins = [
 
 # [scratchpads.clock]
 # animation = "fromRight"
-# command = "kitty --class kitty-clock peaclock"
-# class = "kitty-clock"
+# command = "wezterm start --class 'wezterm-clock' peaclock"
+# class = "wezterm-clock"
 # size = "380px 275px"
 # position = "1520px 403px"
 # lazy = true
@@ -24,8 +24,8 @@ plugins = [
 
 [scratchpads.yazi]
 animation = "fromRight"
-command = "kitty --class kitty-yazi -e yazi"
-class = "kitty-yazi"
+command = "wezterm start --class 'wezterm-yazi' -e yazi"
+class = "wezterm-yazi"
 size = "65% 60%"
 max_size = "1920px 100%"
 position = "336px 216px"
