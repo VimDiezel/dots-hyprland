@@ -1,3 +1,10 @@
+#  ╔═╗╔═╗╦ ╦╦═╗╔═╗  ╔═╗╔═╗╔╗╔╔═╗╦╔═╗
+#  ╔═╝╚═╗╠═╣╠╦╝║    ║  ║ ║║║║╠╣ ║║ ╦
+#  ╚═╝╚═╝╩ ╩╩╚═╚═╝  ╚═╝╚═╝╝╚╝╚  ╩╚═╝
+
+# If not running interactively, don't do anything
+[[ $- != *i* ]] && return
+
 #  ┬  ┬┌─┐┬─┐┌─┐
 #  └┐┌┘├─┤├┬┘└─┐
 #   └┘ ┴ ┴┴└─└─┘
@@ -5,6 +12,7 @@ export VISUAL="${EDITOR}"
 export EDITOR='nvim'
 export BROWSER='zen-browser'
 export PATH="$PATH:/home/vimdiesel/.cargo/bin"
+export BAT_THEME="base16"
 
 export FZF_DEFAULT_OPTS="
 	--color=fg:#908caa,hl:#ebbcba
@@ -53,11 +61,16 @@ autoload -Uz compinit
 
 local zcompdump="$HOME/.config/zsh/zcompdump"
 
-compinit -i -d "$zcompdump"
-
-if [[ ! -f "${zcompdump}.zwc" ]]; then
-  zcompile -U "$zcompdump" &!
+if [[ -n "$zcompdump"(#qN.mh+24) ]]; then
+    compinit -i -d "$zcompdump"
+else
+    compinit -C -d "$zcompdump"
 fi
+
+if [[ ! -f "${zcompdump}.zwc" || "$zcompdump" -nt "${zcompdump}.zwc" ]]; then
+    zcompile -U "$zcompdump"
+fi
+
 
 autoload -Uz add-zsh-hook
 autoload -Uz vcs_info
@@ -97,10 +110,11 @@ bindkey "^I" expand-or-complete-with-dots
 #  ┬ ┬┬┌─┐┌┬┐┌─┐┬─┐┬ ┬
 #  ├─┤│└─┐ │ │ │├┬┘└┬┘
 #  ┴ ┴┴└─┘ ┴ └─┘┴└─ ┴
-HISTFILE=~/.config/zsh/zhistory
-HISTSIZE=5000
-SAVEHIST=5000
+HISTFILE=~/.config/zhistory
+HISTSIZE=10000
+SAVEHIST=10000
 HISTDUP=erase
+setopt inc_append_history_time
 setopt appendhistory
 setopt sharehistory
 setopt hist_ignore_space
@@ -115,7 +129,7 @@ setopt hist_find_no_dups
 setopt AUTOCD              # change directory just by typing its name
 setopt PROMPT_SUBST        # enable command substitution in prompt
 setopt MENU_COMPLETE       # Automatically highlight first element of completion menu
-setopt LIST_PACKED		   # The completion menu takes less space.
+setopt LIST_PACKED         # The completion menu takes less space.
 setopt AUTO_LIST           # Automatically list choices on ambiguous completion.
 setopt COMPLETE_IN_WORD    # Complete from both ends of a word.
 
@@ -127,16 +141,16 @@ source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source /usr/share/zsh/plugins/zsh-history-substring-search/zsh-history-substring-search.zsh
 
-bindkey '^[[A' history-substring-search-up
-bindkey '^[[B' history-substring-search-down
-bindkey '^[[3~' delete-char
-bindkey "^[[H" beginning-of-line
-bindkey "^[[F" end-of-line
-
+# bindkey '^[[A' history-substring-search-up
+# bindkey '^[[B' history-substring-search-down
+# bindkey '^[[3~' delete-char
+# bindkey "^[[H" beginning-of-line
+# bindkey "^[[F" end-of-line
 
 #  ┌─┐┬  ┬┌─┐┌─┐
 #  ├─┤│  │├─┤└─┐
 #  ┴ ┴┴─┘┴┴ ┴└─┘
+alias cs="clear-shell"
 alias vim="nvim"
 alias cat="bat --theme=base16"
 alias ls='eza --icons=always --color=always -a'
