@@ -5,6 +5,24 @@ add_newline = true
 # Palettes must be defined _after_ this line
 palette = "rose-pine"
 
+# Palette definitions
+[palettes.rose-pine]
+base = "#191724"
+surface = "#1f1d2e"
+overlay = "#26233a"
+muted = "#6e6a86"
+subtle = "#908caa"
+text = "#e0def4"
+love = "#eb6f92"
+gold = "#f6c177"
+rose = "#ebbcba"
+pine = "#31748f"
+foam = "#9ccfd8"
+iris = "#c4a7e7"
+# highlight low = "#2
+# highlight med = "#403d52"
+# highlight high = "#524f67"
+
 format = """
 $directory\
 $git_branch\
@@ -32,8 +50,11 @@ error_symbol = "[ ❯](love)"
 vimcmd_symbol = "[ ❮](subtle)" # For use with zsh-vi-mode
 
 [git_branch]
-style = "bold foam"
-symbol = " "
+style = "bg: cyan"
+symbol = "󰘬"
+truncation_length = 12
+truncation_symbol = ""
+format = "󰜥  [](bold fg:cyan)[$symbol $branch(:$remote_branch)](fg:black bg:cyan)[ ](bold fg:cyan)"
 
 [fill]
 style = "fg:overlay"
@@ -43,7 +64,7 @@ symbol = " "
 disabled = false
 style = "fg:love"
 format = '(fg:overlay)([$all_status$ahead_behind]($style))(fg:overlay) '
-up_to_date = '[ ✓ ](fg:iris)'
+up_to_date = '[✓](fg:iris)'
 untracked = '[?\($count\)](fg:gold)'
 stashed = '[\$](fg:iris)'
 modified = '[!\($count\)](fg:gold)'
@@ -57,7 +78,8 @@ behind = '[⇣\(${count}\)](fg:rose)'
 [directory]
 format = "[$path ]($style)"
 style = "bold fg:pine"
-truncation_length = 3
+read_only = "  "
+truncation_length = 6
 truncation_symbol = "…/"
 
 [directory.substitutions]
@@ -66,105 +88,6 @@ Downloads = " "
 Music = " "
 Pictures = " "
 
-# Palette definitions
-[palettes.rose-pine]
-base = "#191724"
-surface = "#1f1d2e"
-overlay = "#26233a"
-muted = "#6e6a86"
-subtle = "#908caa"
-text = "#e0def4"
-love = "#eb6f92"
-gold = "#f6c177"
-rose = "#ebbcba"
-pine = "#31748f"
-foam = "#9ccfd8"
-iris = "#c4a7e7"
-# highlight low = "#2
-# highlight med = "#403d52"
-# highlight high = "#524f67"
-
-# Languages
-[c]
-style = "fg:pine"
-format = "[$symbol$version]($style) "
-disabled = false
-symbol = " "
-
-[elixir]
-style = "fg:pine"
-format = "[$symbol$version]($style) "
-disabled = false
-symbol = " "
-
-[elm]
-style = "fg:pine"
-format = "[$symbol$version]($style) "
-disabled = false
-symbol = " "
-
-[golang]
-style = "fg:pine"
-format = "[$symbol$version]($style) "
-disabled = false
-symbol = " "
-
-[haskell]
-style = "fg:pine"
-format = "[$symbol$version]($style) "
-disabled = false
-symbol = " "
-
-[java]
-style = "fg:pine"
-format = "[$symbol$version]($style) "
-disabled = false
-symbol = " "
-
-[julia]
-style = "fg:pine"
-format = "[$symbol$version]($style) "
-disabled = false
-symbol = " "
-
-[nodejs]
-style = "fg:pine"
-format = "[$symbol$version]($style) "
-disabled = false
-symbol = "󰎙 "
-
-[nim]
-style = "fg:pine"
-format = "[$symbol$version]($style) "
-disabled = false
-symbol = "󰆥 "
-
-[rust]
-style = "fg:pine"
-format = "[$symbol$version]($style) "
-disabled = false
-symbol = ""
-
-[scala]
-style = "fg:pine"
-format = "[$symbol$version]($style) "
-disabled = false
-symbol = " "
-
-[python]
-style = "fg:pine"
-format = "[$symbol$version]($style) "
-disabled = false
-symbol = ' '
-
-[conda]
-style = "fg:pine"
-format = "[$symbol$environment]($style) "
-disabled = false
-symbol = '🅒 '
-
-[lua]
-style = "fg:pine"
-format = "[$symbol$version]($style) "
-disabled = false
-symbol = '󰢱 '
+# [cmd_duration]
+# min_time = 0
+# format = '[](bold fg:gold)[󰪢 $duration](bold bg:gold fg:black)[](bold fg:gold)'
