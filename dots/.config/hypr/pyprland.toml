@@ -4,14 +4,15 @@ plugins = [
 ]
 
 
-# [scratchpads.term]
-# animation = "fromTop"
-# command = "wezterm start --class 'wezterm-dropterm'"
-# class = "wezterm-dropterm"
-# size = "65% 35%"
-# max_size = "1920px 100%"
-# offset = 700
-# margin = 47
+[scratchpads.term]
+animation = "fromTop"
+command = "wezterm start --class 'wezterm-dropterm'"
+class = "wezterm-dropterm"
+size = "65% 35%"
+max_size = "1920px 100%"
+offset = 700
+lazy = true
+margin = 47
 
 # [scratchpads.clock]
 # animation = "fromRight"
@@ -32,24 +33,22 @@ position = "336px 216px"
 lazy = true
 margin = 340
 
-
 [scratchpads.spotify]
 animation = "fromLeft"
 command = "spotify"
-class = "Spotify"
+class = "spotify"
 match_by = "class"
 size = "90% 88%"
 max_size = "1920px 100%"
 lazy = true
 margin = 110
 
-[scratchpads.obsidian]
-animation = "fromBottom"
-command = "obsidian"
-class = "obsidian"
-match_by = "class"
-size = "65% 620px"
-max_size = "1920px 100%"
-lazy = true
-margin = 20
-
+# [scratchpads.obsidian]
+# animation = "fromBottom"
+# command = "obsidian"
+# class = "obsidian"
+# match_by = "class"
+# size = "65% 620px"
+# max_size = "1920px 100%"
+# lazy = true
+# margin = 20
