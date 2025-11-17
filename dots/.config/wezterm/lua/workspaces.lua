@@ -68,7 +68,7 @@ function M.setup_panes_workspace(workspace_name)
       wez.action.SplitPane {
         direction = "Right",
         command = { args = { "spotify_player" } },
-        size = { Percent = 38 },
+        size = { Percent = 32 },
       },
       pane
     )
