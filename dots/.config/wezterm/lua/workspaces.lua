@@ -67,7 +67,7 @@ function M.setup_panes_workspace(workspace_name)
     gui_window:perform_action(
       wez.action.SplitPane {
         direction = "Right",
-        command = { args = { "/home/vimdiesel/.cargo/bin/spotify_player" } },
+        command = { args = { "spotify_player" } },
         size = { Percent = 38 },
       },
       pane
