@@ -74,6 +74,7 @@
   movh (multi (layer-switch mouse) f14)
   1shot (multi n (layer-switch base))
   capb (multi esc (layer-switch base))
+  muev (multi f7 mute)
 
   ;; LAYERS 
   bse (layer-switch base)
@@ -84,7 +85,7 @@
   wm (layer-toggle wm)
   moa (layer-toggle media)
 
-  mntoh (tap-hold $tap-time $hold-time f14 @mov)
+  mntoh (tap-hold $tap-time $hold-time @muev @mov)
   lam (tap-hold $tap-time $hold-time f3 @moa)
   fwm (tap-hold $tap-time $hold-time f9 @num)
   spc (tap-hold $tap-time $hold-time spc @wm)
