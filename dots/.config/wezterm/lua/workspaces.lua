@@ -32,9 +32,9 @@ function M.setup_tabs_workspace(workspace_name)
   first_tab:send_text "vim\r"
   window:active_tab():set_title ""
 
-  -- Create the second tab and open spotify-player in it and rename the tab title
+  -- Create the second tab and open rmpc in it and rename the tab title
   local _, second_tab, _ = window:spawn_tab {}
-  second_tab:send_text "spotify_player\r"
+  second_tab:send_text "rmpc\r"
   window:active_tab():set_title ""
 
   -- Create the third tab and rename the tab title
@@ -62,12 +62,12 @@ function M.setup_panes_workspace(workspace_name)
   local gui_window = window:gui_window()
   pane:send_text "vim\r"
 
-  -- Split and set up Spotify on the right
+  -- Split and set up rmpc on the right
   wez.time.call_after(0.1, function()
     gui_window:perform_action(
       wez.action.SplitPane {
         direction = "Right",
-        command = { args = { "spotify_player" } },
+        command = { args = { "rmpc" } },
         size = { Percent = 32 },
       },
       pane
