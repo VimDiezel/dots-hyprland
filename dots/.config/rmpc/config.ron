@@ -7,7 +7,7 @@
     password: None,
     theme: "theme",
     cache_dir: None,
-    lyrics_dir: "~/.config/rmpc",
+    lyrics_dir: "~/.config/rmpc_lyrics",
     volume_step: 5,
     max_fps: 30,
     scrolloff: 0,
