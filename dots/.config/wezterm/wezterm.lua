@@ -3,7 +3,7 @@ local utils = require "lua.utils"
 local appearance = require "lua.appearance"
 local mappings = require "lua.mappings"
 local workspaces = require "lua.workspaces"
-local bar = wez.plugin.require "https://github.com/adriankarlen/bar.wezterm"
+local bar = wez.plugin.require "https://github.com/VimDiezel/bar.wezterm"
 
 local platform = utils.platform()
 local c = {}
@@ -99,6 +99,9 @@ bar.apply_to_config(c, {
       enabled = false,
     },
     spotify = {
+      enabled = false,
+    },
+    mpd = {
       enabled = true,
     },
     clock = {

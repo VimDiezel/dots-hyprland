@@ -132,7 +132,12 @@ check_dependencies() {
 }
 
 # Application handlers (equivalent to your AutoHotkey hotkeys)
-launch_wezterm() {
+launch_wezterm_T() {
+  # Match WezTerm with specific title (exact match)
+  handle_app "WezTerm(T):WezTerm(T)" "export WEZTERM_WORKSPACE=Home_T && wezterm start --class 'WezTerm(T)' --always-new-process"
+}
+
+launch_wezterm_P() {
   # Match WezTerm with specific title (exact match)
   handle_app "WezTerm(P):WezTerm(P)" "export WEZTERM_WORKSPACE=Home_P && wezterm start --class 'WezTerm(P)' --always-new-process"
 }
@@ -172,7 +177,7 @@ main() {
 
   case "$1" in
   "wezterm" | "w")
-    launch_wezterm
+    launch_wezterm_T
     ;;
   "discord" | "d")
     launch_discord
