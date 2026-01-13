@@ -26,6 +26,50 @@ M.smart_split = wez.action_callback(function(window, pane)
   end
 end)
 
+-- Generic function to find or create a tab with a specific process
+local function find_or_create_tab(window, pane, process_name, tab_title, cwd)
+  -- Check all tabs for the process
+  local tabs = window:mux_window():tabs()
+  local found_tab = nil
+
+  for _, tab in ipairs(tabs) do
+    local title = tab:get_title()
+    -- Check if tab title matches
+    if title == tab_title then
+      -- Check if the process is actually running in this tab
+      local tab_panes = tab:panes()
+      for _, tab_pane in ipairs(tab_panes) do
+        local foreground = tab_pane:get_foreground_process_name()
+        if foreground and foreground:match(process_name) then
+          found_tab = tab
+          break
+        end
+      end
+    end
+    if found_tab then
+      break
+    end
+  end
+
+  if found_tab then
+    -- Focus the existing tab
+    found_tab:activate()
+  else
+    -- Create new tab and run the process
+    local spawn_config = {
+      args = { process_name },
+    }
+
+    -- Add cwd if provided
+    if cwd then
+      spawn_config.cwd = cwd
+    end
+
+    window:perform_action(act.SpawnCommandInNewTab(spawn_config), pane)
+    window:active_tab():set_title(tab_title)
+  end
+end
+
 -- Function to activate and zoom the pane with any given pane ID
 wez.on("focus-id-pane-zoom", function(window, pane, pane_id)
   local tab = window:mux_window():active_tab()
@@ -66,9 +110,6 @@ local leader = { key = "F3", timeout_milliseconds = 3000 }
 
 local keys = function()
   local keys = {
-    -- CTRL-A, CTRL-A sends CTRL-A
-    keybind({ mod.l, mod.c }, "a", act.SendString "\x01"),
-
     -- pane and tabs
     keybind({ mod.l, mod.s }, "_", act.SplitVertical { domain = "CurrentPaneDomain" }),
     keybind({ mod.l, mod.s }, "|", act.SplitHorizontal { domain = "CurrentPaneDomain" }),
@@ -98,16 +139,9 @@ local keys = function()
     keybind({ mod.l }, "-", act.ShowLauncher),
     keybind({ mod.l }, "q", act.CloseCurrentTab { confirm = true }),
     keybind({ mod.l }, "Space", act.QuickSelect),
-    keybind({ mod.l }, "v", act.ActivateCopyMode),
-    keybind({ mod.l, mod.c }, "/", act.Search "CurrentSelectionOrEmptyString"),
-    keybind(
-      { mod.l },
-      ";",
-      wez.action_callback(function(window, pane)
-        wez.emit("focus-id-pane-zoom", window, pane, 0)
-      end)
-    ),
-
+    keybind({ mod.l, mod.c }, "v", act.ActivateCopyMode),
+    keybind({ mod.l }, "/", act.Search "CurrentSelectionOrEmptyString"),
+    -- Restart vim
     keybind(
       { mod.l },
       "y",
@@ -119,37 +153,57 @@ local keys = function()
       end)
     ),
 
+    -- Restart vim and fzf with cd + opening vim in the new dir
     keybind(
       { mod.l },
-      "m",
+      "g",
       wez.action_callback(function(window, pane)
-        wez.emit("focus-id-pane", window, pane, 1)
+        -- Send commands to current pane
+        pane:send_text " qq"
+        wez.sleep_ms(100)
+        pane:send_text "cs; cn\r"
       end)
     ),
 
-    keybind(
-      { mod.l },
-      "n",
-      wez.action_callback(function(window, pane)
-        wez.emit("focus-id-pane-zoom", window, pane, 1)
-      end)
-    ),
+    -- keybind(
+    --   { mod.l },
+    --   ";",
+    --   wez.action_callback(function(window, pane)
+    --     wez.emit("focus-id-pane-zoom", window, pane, 0)
+    --   end)
+    -- ),
 
-    keybind(
-      { mod.l },
-      "/",
-      wez.action_callback(function(window, pane)
-        wez.emit("focus-id-pane", window, pane, 2)
-      end)
-    ),
+    -- keybind(
+    --   { mod.l },
+    --   "m",
+    --   wez.action_callback(function(window, pane)
+    --     wez.emit("focus-id-pane", window, pane, 1)
+    --   end)
+    -- ),
 
-    keybind(
-      { mod.l },
-      ".",
-      wez.action_callback(function(window, pane)
-        wez.emit("focus-id-pane-zoom", window, pane, 2)
-      end)
-    ),
+    -- keybind(
+    --   { mod.l },
+    --   "n",
+    --   wez.action_callback(function(window, pane)
+    --     wez.emit("focus-id-pane-zoom", window, pane, 1)
+    --   end)
+    -- ),
+    --
+    -- keybind(
+    --   { mod.l },
+    --   "/",
+    --   wez.action_callback(function(window, pane)
+    --     wez.emit("focus-id-pane", window, pane, 2)
+    --   end)
+    -- ),
+    --
+    -- keybind(
+    --   { mod.l },
+    --   ".",
+    --   wez.action_callback(function(window, pane)
+    --     wez.emit("focus-id-pane-zoom", window, pane, 2)
+    --   end)
+    -- ),
 
     -- keybind(
     --   { mod.l },
@@ -159,6 +213,7 @@ local keys = function()
     --   }
     -- ),
 
+    -- change the current tab name
     keybind(
       { mod.l },
       "e",
@@ -175,6 +230,42 @@ local keys = function()
           win:active_tab():set_title(line)
         end),
       }
+    ),
+
+    -- find or create the nvim tab
+    keybind(
+      { mod.l },
+      "v",
+      wez.action_callback(function(window, pane)
+        find_or_create_tab(window, pane, "nvim", "")
+      end)
+    ),
+
+    -- find or create the nvim tab
+    keybind(
+      { mod.l },
+      ";",
+      wez.action_callback(function(window, pane)
+        find_or_create_tab(window, pane, "nvim", "")
+      end)
+    ),
+
+    -- find or create the rmpc tab
+    keybind(
+      { mod.l },
+      "m",
+      wez.action_callback(function(window, pane)
+        find_or_create_tab(window, pane, "rmpc", "")
+      end)
+    ),
+
+    -- find or create the my dots repo
+    keybind(
+      { mod.l, mod.c },
+      "d",
+      wez.action_callback(function(window, pane)
+        find_or_create_tab(window, pane, "zsh", "󰇘", wez.home_dir .. "/dots-hyprland")
+      end)
     ),
 
     -- creates a new tab with a given name and cdf
@@ -210,13 +301,70 @@ local keys = function()
       }
     ),
 
-    -- creates a new tab with cdf
+    -- creates a new tab and then fzf + cd then opens vim
     -- keybind(
-    --   { mod.l, mod.s, mod.c },
-    --   "t",
-    --   act.SpawnCommandInNewTab {
-    --     args = { "pwsh", "-NoExit", "-c", "cdf" },
-    --   }
+    --   { mod.l },
+    --   "v",
+    --   wez.action_callback(function(window, pane)
+    --     -- Start interactive zsh
+    --     window:perform_action(
+    --       act.SpawnCommandInNewTab {
+    --         args = { "zsh", "-i" },
+    --       },
+    --       pane
+    --     )
+    --
+    --     window:active_tab():set_title ""
+    --
+    --     -- Run cn inside the SAME shell
+    --     local new_pane = window:active_pane()
+    --     new_pane:send_text "cn\n"
+    --   end)
+    -- ),
+    --
+    -- -- look for the rmpc tab if found focus it if not create it
+    -- keybind(
+    --   { mod.l },
+    --   "m",
+    --   wez.action_callback(function(window, pane)
+    --     -- Check all tabs for rmpc
+    --     local tabs = window:mux_window():tabs()
+    --     local found_rmpc_tab = nil
+    --
+    --     for _, tab in ipairs(tabs) do
+    --       local title = tab:get_title()
+    --       -- Check if tab title is "rmpc"
+    --       if title == "" then
+    --         -- Check if rmpc process is actually running in this tab
+    --         local tab_panes = tab:panes()
+    --         for _, tab_pane in ipairs(tab_panes) do
+    --           local foreground = tab_pane:get_foreground_process_name()
+    --           if foreground and foreground:match "rmpc" then
+    --             found_rmpc_tab = tab
+    --             break
+    --           end
+    --         end
+    --       end
+    --       if found_rmpc_tab then
+    --         break
+    --       end
+    --     end
+    --
+    --     if found_rmpc_tab then
+    --       -- Focus the existing rmpc tab
+    --       found_rmpc_tab:activate()
+    --     else
+    --       -- Create new tab and run rmpc
+    --       window:perform_action(
+    --         act.SpawnCommandInNewTab {
+    --           args = { "rmpc" },
+    --         },
+    --         pane
+    --       )
+    --
+    --       window:active_tab():set_title ""
+    --     end
+    --   end)
     -- ),
 
     -- creates a new tab with a given name in home_dir
@@ -363,15 +511,15 @@ local keys = function()
     ),
 
     -- launch spotify_player as a small pane in the bottom
-    keybind(
-      { mod.l },
-      "p",
-      act.SplitPane {
-        direction = "Down",
-        command = { args = { "/home/vimdiesel/.cargo/bin/spotify_player" } },
-        size = { Cells = 6 },
-      }
-    ),
+    -- keybind(
+    --   { mod.l },
+    --   "p",
+    --   act.SplitPane {
+    --     direction = "Down",
+    --     command = { args = { "/home/vimdiesel/.cargo/bin/spotify_player" } },
+    --     size = { Cells = 6 },
+    --   }
+    -- ),
 
     -- launch shell as a small pane in the bottom
     -- keybind(
