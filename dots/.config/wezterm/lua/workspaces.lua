@@ -29,17 +29,17 @@ function M.setup_tabs_workspace(workspace_name)
   end)
 
   -- Create the first tab and open vim in it and rename the tab title
-  first_tab:send_text "vim\r"
+  first_tab:send_text "fcdn\r"
   window:active_tab():set_title ""
 
   -- Create the second tab and open rmpc in it and rename the tab title
   local _, second_tab, _ = window:spawn_tab {}
   second_tab:send_text "rmpc\r"
-  window:active_tab():set_title ""
+  window:active_tab():set_title ""
 
   -- Create the third tab and rename the tab title
-  local _, third_tab, _ = window:spawn_tab {}
-  window:active_tab():set_title ""
+  -- local _, third_tab, _ = window:spawn_tab {}
+  -- window:active_tab():set_title ""
 
   -- After doing all that focus (activate) the first tab
   first_tab:activate()
