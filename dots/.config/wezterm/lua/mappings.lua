@@ -28,19 +28,30 @@ end)
 
 -- Generic function to find or create a tab with a specific process
 local function find_or_create_tab(window, pane, process_name, tab_title, cwd)
+  -- Validate that at least one of process_name or tab_title is provided
+  if (not process_name or process_name == "") and (not tab_title or tab_title == "") then
+    wez.log_error "find_or_create_tab: At least one of process_name or tab_title must be provided"
+    return
+  end
+
   -- Check all tabs for the process
   local tabs = window:mux_window():tabs()
   local found_tab = nil
 
   for _, tab in ipairs(tabs) do
     local title = tab:get_title()
-    -- Check if tab title matches
-    if title == tab_title then
+    local title_matches = not tab_title or tab_title == "" or title == tab_title
+
+    if title_matches then
       -- Check if the process is actually running in this tab
       local tab_panes = tab:panes()
       for _, tab_pane in ipairs(tab_panes) do
         local foreground = tab_pane:get_foreground_process_name()
-        if foreground and foreground:match(process_name) then
+        local process_matches = not process_name
+          or process_name == ""
+          or (foreground and foreground:match(process_name))
+
+        if process_matches then
           found_tab = tab
           break
         end
@@ -57,7 +68,7 @@ local function find_or_create_tab(window, pane, process_name, tab_title, cwd)
   else
     -- Create new tab and run the process
     local spawn_config = {
-      args = { process_name },
+      args = { process_name or "zsh" },
     }
 
     -- Add cwd if provided
@@ -66,7 +77,10 @@ local function find_or_create_tab(window, pane, process_name, tab_title, cwd)
     end
 
     window:perform_action(act.SpawnCommandInNewTab(spawn_config), pane)
-    window:active_tab():set_title(tab_title)
+
+    if tab_title and tab_title ~= "" then
+      window:active_tab():set_title(tab_title)
+    end
   end
 end
 
@@ -237,7 +251,7 @@ local keys = function()
       { mod.l },
       "v",
       wez.action_callback(function(window, pane)
-        find_or_create_tab(window, pane, "nvim", "")
+        find_or_create_tab(window, pane, nil, "")
       end)
     ),
 
@@ -246,7 +260,7 @@ local keys = function()
       { mod.l },
       ";",
       wez.action_callback(function(window, pane)
-        find_or_create_tab(window, pane, "nvim", "")
+        find_or_create_tab(window, pane, nil, "")
       end)
     ),
 
@@ -264,7 +278,7 @@ local keys = function()
       { mod.l, mod.c },
       "d",
       wez.action_callback(function(window, pane)
-        find_or_create_tab(window, pane, "zsh", "󰇘", wez.home_dir .. "/dots-hyprland")
+        find_or_create_tab(window, pane, nil, "󰇘", wez.home_dir .. "/dots-hyprland")
       end)
     ),
 
