@@ -21,20 +21,24 @@ export FZF_DEFAULT_OPTS="
 	--color=spinner:#f6c177,info:#9ccfd8
 	--color=pointer:#c4a7e7,marker:#eb6f92,prompt:#908caa"
 
-pokeget --hide-name shellder
+pokeget --hide-name random
 
 eval "$(starship init zsh)"
 
 # Define the function
 function clear-shell() {
   clear
-  pokeget --hide-name shellder
+  pokeget --hide-name random
 }
 
 # fzf + cd
 fcd() {
   local dir
-  dir=$(fd --type d --hidden --exclude .git . "$HOME" \
+  dir=$(
+    { 
+      echo "$HOME"
+      fd --type d --hidden --exclude .git . "$HOME"
+    } \
     | sed "s|^$HOME|~|" \
     | fzf --border \
       --prompt="📁 ~ > " \
@@ -43,6 +47,25 @@ fcd() {
       --bind 'ctrl-/:toggle-preview') || return
   cd "${dir/#\~/$HOME}" || return
   clear-shell
+}
+
+# fzf + cd + nvim
+fcdn() {
+  local dir
+  dir=$(
+    { 
+      echo "$HOME"
+      fd --type d --hidden --exclude .git . "$HOME"
+    } \
+    | sed "s|^$HOME|~|" \
+    | fzf --border \
+      --prompt="📁 ~ > " \
+      --preview 'eza -lah --icons --color=always --group-directories-first --git $(echo {} | sed "s|^~|$HOME|")' \
+      --preview-window=right:50%:wrap \
+      --bind 'ctrl-/:toggle-preview') || return
+  cd "${dir/#\~/$HOME}" || return
+  clear-shell
+  nvim
 }
 
 # Create a ZLE widget that injects the command and presses Enter
@@ -151,6 +174,7 @@ source /usr/share/zsh/plugins/zsh-history-substring-search/zsh-history-substring
 #  ├─┤│  │├─┤└─┐
 #  ┴ ┴┴─┘┴┴ ┴└─┘
 alias cs="clear-shell"
+alias cn="fcdn"
 alias vim="nvim"
 alias cat="bat --theme=base16"
 alias ls='eza --icons=always --color=always -a'
