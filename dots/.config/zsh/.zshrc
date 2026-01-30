@@ -83,7 +83,8 @@ fzf-history-widget() {
     --height=40% \
     --border \
     --prompt="History ❯ " \
-    --query="$LBUFFER")
+    --query="$LBUFFER" \
+    --color=prompt:#c4a7e7)
 
   if [[ -n "$selected" ]]; then
     LBUFFER=$(echo "$selected" | sed 's/^[[:space:]]*[0-9]\+[[:space:]]*//')
