@@ -25,11 +25,19 @@ pokeget --hide-name random
 
 eval "$(starship init zsh)"
 
-# Define the function
-function clear-shell() {
+# Define the widget/function
+clear-shell() {
   clear
   pokeget --hide-name random
+
+  if [[ -n $WIDGET ]]; then
+    BUFFER=""
+    echo -e "\n"  # Move cursor down with newlines
+    zle redisplay
+  fi
 }
+zle -N clear-shell
+bindkey '^L' clear-shell
 
 # fzf + cd
 fcd() {
@@ -68,14 +76,24 @@ fcdn() {
   nvim
 }
 
-# Create a ZLE widget that injects the command and presses Enter
-function _inject-clear-shell() {
-  LBUFFER="clear-shell"
-  zle accept-line
-}
+# Create a ZLE widget that fuzzy search command history
+fzf-history-widget() {
+  local selected
+  selected=$(fc -rl 1 | fzf --tac --no-sort \
+    --height=40% \
+    --border \
+    --prompt="History ❯ " \
+    --query="$LBUFFER")
 
-zle -N _inject-clear-shell
-bindkey '^L' _inject-clear-shell
+  if [[ -n "$selected" ]]; then
+    LBUFFER=$(echo "$selected" | sed 's/^[[:space:]]*[0-9]\+[[:space:]]*//')
+  fi
+
+  zle redisplay
+}
+zle -N fzf-history-widget
+bindkey '^R' fzf-history-widget
+
 
 #  ┬  ┌─┐┌─┐┌┬┐  ┌─┐┌┐┌┌─┐┬┌┐┌┌─┐
 #  │  │ │├─┤ ││  ├┤ ││││ ┬││││├┤
