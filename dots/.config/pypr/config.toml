@@ -10,7 +10,7 @@ command = "wezterm start --class 'wezterm-dropterm'"
 class = "wezterm-dropterm"
 size = "65% 35%"
 max_size = "1920px 100%"
-offset = 700
+# offset = "700"
 lazy = true
 margin = 52
 
