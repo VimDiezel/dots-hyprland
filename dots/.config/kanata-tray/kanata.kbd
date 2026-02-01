@@ -92,7 +92,7 @@
 )
 
 (deflayer base
-  _      _    _    _    _    _    _    _    _    _    _    _    _
+  _      _    _    _    _    _    _    _    _    _    _    _    @gam
   XX     XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   f16    f17
   _      _    _    _    _    _    _    _    _    _    _    @obr @cbr @fsl   del
   @cape  @a   @s   @d   @f   _    _    @j   @k   @l   @;   @ap  _           f18
