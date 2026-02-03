@@ -1,3 +1,0 @@
-[[shades]]
-name = "my-vibrance"
-default = true  # will be activated when no other shader is scheduled
