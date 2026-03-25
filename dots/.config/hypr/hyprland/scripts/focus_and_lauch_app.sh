@@ -144,7 +144,7 @@ launch_wezterm_P() {
 
 launch_discord() {
   # Match Discord by class only
-  handle_app "vesktop" "vesktop"
+  handle_app "equibop" "equibop"
 }
 
 launch_browser() {
