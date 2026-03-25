@@ -93,63 +93,63 @@
 
 (deflayer base
   _      _    _    _    _    _    _    _    _    _    _    _    @gam
-  XX     XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   f16    f17
+  XX     XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   f16    home
   _      _    _    _    _    _    _    _    _    _    _    @obr @cbr @fsl   del
-  @cape  @a   @s   @d   @f   _    _    @j   @k   @l   @;   @ap  _           f18
+  @cape  @a   @s   @d   @f   _    _    @j   @k   @l   @;   @ap  _           pgup
   @lam   _    _    @c   @v   _    _    _    @co  @fu  @bsl   @mbspc   _
-  @mntoh     f7    @fwm           @spc           f10  _    _      _  _  _
+  @mntoh     f7    @fwm           @spc           f10  _    _       _  _  _
 )
 
 (deflayer arrows
   _     _    _    _    _    _    _    _    _    _    _    _    _
-  XX    XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX     XX    f17
+  XX    XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX     XX    home
   _     _    _    _    _    _    _    _    _    _    _    _    _      _     del
-  _     @a   @s   @d   @f   _    left down up  right _    _    _            f18
-  @lam  _    _    _    _    _    _    _    _   _     _   bspc         XX
+  _     @a   @s   @d   @f   _    left down up  right _    _    _            pgup
+  @lam  _    _    _    _    _    _    _    _   _     _   bspc        XX
   _    f7   @fwm              @spc          _    _    _           XX XX XX
 )
 
 (deflayer num
   _      _    _    _    _    _    _    _    _    _    _    _    @gam
-  XX     XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX     @capb       f17
+  XX     XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX     @capb       home
   _      _    _    _    @uns A-M-C-t   _    7    8    9    _    _    _    _        del
-  @cape  @a   @s   @d   .    `         -    4    5    6    +    =    _             f18
+  @cape  @a   @s   @d   .    `         -    4    5    6    +    =    _             pgup
   @lam   0    _    ,    S-\  \         @uns 1    2    3    0     bspc XX
-  @capb       f7    @fwm          @spc              _    _    _   XX XX XX
+  @capb       f7    @fwm          @spc              _    _    _    XX XX XX
 )
 
 (deflayer wm
   _      _         _        _        _     _    _    _    _    _    _    _    @gam
-  XX     XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX     @capb                          f17
+  XX     XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX     @capb                          home
   _      M-c       A-S-C-w  A-S-C-e  A-S-r   A-S-C-t  A-S-e      _    _    _     XX  @[   _    _      del
-  @cape  _         A-S-C-t     M-d      _       A-4      A-S-C-g    _    _    A-S-C-;   _    _    _      f18
+  @cape  _         A-S-C-t     M-d      _       A-4      A-S-C-g    _    _    A-S-C-;   _    _    _   pgup
   @lam   _         _        A-S-C-d  _       A-S-C-b  _          _    _    _    _    bspc    XX
-  @capb       f7    @fwm           @spc              _    _    _                         XX XX XX
+  @capb       f7    @fwm           @spc              _    _    _                          XX XX XX
 )
 
 (deflayer gaming
   esc   f1   f2   f3   f4   f5   f6   f7   f8   f9   f10  f11  @bse
-  grv   1    2    3    4    5    6    7    8    9    0    -    =     XX     f17
-  tab   q    w    e    r    t    y    u    i    o    p    [    ]     \      del
-  lctl  a    s    d    f    g    h    j    k    l    ;    '     ret         f18
+  grv   1    2    3    4    5    6    7    8    9    0    -    =     XX    home
+  tab   q    w    e    r    t    y    u    i    o    p    [    ]     \     del 
+  lctl  a    s    d    f    g    h    j    k    l    ;    '     ret        pgup
   lsft  z    x    c    v    b    n    m    ,    .    /     bspc   _
-  f3    f7  lalt           spc               ralt  rmet  rctl  _ _ _
+  f3    f7  lalt           spc               ralt  rmet  rctl   _ _ _
 )
 
 (deflayer mouse
   _     _    _    _    _    _    _    _    _    _    _    _    @gam
-  XX    XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   _  @capb     f17
-  _     _    _    _    _    _    _    _    _    _    _    @[   _    _       del
-  @capb _    _    _    _    _    _    _    _    _    _    _    _            f18
+  XX    XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   _  @capb    home
+  _     _    _    _    _    _    _    _    _    _    _    @[   _    _      del
+  @capb _    _    _    _    _    _    _    _    _    _    _    _           pgup
   @lam  _    _    _    _    _    @1shot    _    _    _    _    bspc   XX
-  @capb      f7    @fwm           _              _    _    _      XX XX XX
+  @capb      f7    @fwm           _              _    _    _       XX XX XX
 )
 
 (deflayer media
   _     _    _    _    _    _    _    _    _    _    _    _    @gam
-  XX    XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX     f17
+  XX    XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX     home
   _     _    f23  @vup f21  _    prev vold volu next pp   _    _    _      del
-  @cape _    @prv @vdw @nex f20  @prv @vdw @vup @nex f23  _    _           f18
+  @cape _    @prv @vdw @nex f20  @prv @vdw @vup @nex f23  _    _           pgup
   @lam  _    _    _    _    _    _    mute  _    _    _    bspc       XX
-  _       f7    @fwm           @pp              _    _    _       XX XX XX
+  _       f7    @fwm           @pp              _    _    _        XX XX XX
 )
