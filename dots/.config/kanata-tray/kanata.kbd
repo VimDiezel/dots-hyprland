@@ -36,6 +36,7 @@
   ;; vup (macro-repeat A-up)
   ;; vdw (macro-repeat A-down)
   spo (macro A-S-C-p M-d M-d A-S-C-s)
+  mflo (macro f8 15 a)
 
   ;; HOME ROW MODS
   a (tap-hold $tap-time $hold-time a lmet)
@@ -70,7 +71,7 @@
   pp M-S-C-p
 
   ;; MULTI ACTIONS
-  mov (multi (layer-switch mouse) f13)
+  mov (multi (layer-switch mouse) f8)
   movh (multi (layer-switch mouse) f14)
   1shot (multi n (layer-switch base))
   capb (multi esc (layer-switch base))
@@ -85,7 +86,7 @@
   wm (layer-toggle wm)
   moa (layer-toggle media)
 
-  mntoh (tap-hold $tap-time $hold-time @muev @mov)
+  mntoh (tap-hold $tap-time $hold-time @mflo @mov)
   lam (tap-hold $tap-time $hold-time f3 @moa)
   fwm (tap-hold $tap-time $hold-time f9 @num)
   spc (tap-hold $tap-time $hold-time spc @wm)
@@ -97,7 +98,7 @@
   _      _    _    _    _    _    _    _    _    _    _    @obr @cbr @fsl   del
   @cape  @a   @s   @d   @f   _    _    @j   @k   @l   @;   @ap  _           pgup
   @lam   _    _    @c   @v   _    _    _    @co  @fu  @bsl   @mbspc   _
-  @mntoh     f7    @fwm           @spc           f10  _    _       _  _  _
+  @mntoh     f7    @fwm           @spc           @num _    _       _  _  _
 )
 
 (deflayer arrows
@@ -106,7 +107,7 @@
   _     _    _    _    _    _    _    _    _    _    _    _    _      _     del
   _     @a   @s   @d   @f   _    left down up  right _    _    _            pgup
   @lam  _    _    _    _    _    _    _    _   _     _   bspc        XX
-  _    f7   @fwm              @spc          _    _    _           XX XX XX
+  _    f7   @fwm              @spc          @num _    _           XX XX XX
 )
 
 (deflayer num
