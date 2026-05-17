@@ -51,16 +51,16 @@ hl.window_rule({ match = { tag = "games"},                                      
 
 -- ######## Opacity ########
 
--- hl.window_rule({ match = { tag = "browser"},                                                             opacity = {0.9, 0.7} })
-hl.window_rule({ match = { tag = "terminal"},                                                               opacity = {0.9, 0.8} })
-hl.window_rule({ match = { tag = "projects"},                                                               opacity = {0.9, 0.8} })
-hl.window_rule({ match = { tag = "spotify"},                                                                opacity = {0.8, 0.8} })
-hl.window_rule({ match = { tag = "im"},                                                                     opacity = {0.9, 0.86} })
-hl.window_rule({ match = { tag = "file-manager"},                                                           opacity = {0.9, 0.8} })
-hl.window_rule({ match = { tag = "multimedia_video"},                                                       opacity = {0.94, 0.86} })
+-- hl.window_rule({ match = { tag = "browser"},                                                             opacity = 0.9, 0.7 })
+hl.window_rule({ match = { tag = "terminal"},                                                               opacity = 0.9, 0.8 })
+hl.window_rule({ match = { tag = "projects"},                                                               opacity = 0.9, 0.8 })
+hl.window_rule({ match = { tag = "spotify"},                                                                opacity = 0.8, 0.8 })
+hl.window_rule({ match = { tag = "im"},                                                                     opacity = 0.9, 0.86 })
+hl.window_rule({ match = { tag = "file-manager"},                                                           opacity = 0.9, 0.8 })
+hl.window_rule({ match = { tag = "multimedia_video"},                                                       opacity = 0.94, 0.86 })
 
 -- Picture-in-Picture opacity
-hl.window_rule({ match = { title = "^([Pp]icture[-\\s]?[Ii]n[-\\s]?[Pp]icture)(.*)$"},                      opacity = {0.95, 0.75} })
+hl.window_rule({ match = { title = "^([Pp]icture[-\\s]?[Ii]n[-\\s]?[Pp]icture)(.*)$"},                      opacity = 0.95, 0.75 })
 
 -- Disable blur for xwayland context menus
 hl.window_rule({ match = { class = "^()$", title = "^()$" }, no_blur = true })

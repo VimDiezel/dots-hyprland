@@ -269,17 +269,17 @@ hl.config({
 		},
 	},
 
-	device = {
+	hl.device({
 		name = "razer-razer-viper-mini",
 		sensitivity = 0,
 		accel_profile = "flat",
-	},
+	}),
 
-	device = {
+	hl.device({
 		name = "dell0814:01-044e:121f-mouse",
 		sensitivity = -0.6,
 		accel_profile = "flat",
-	},
+	}),
 
 	misc = {
 		disable_hyprland_logo = true,
