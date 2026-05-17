@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Hyprland Window Management Script
+# Hyprland Window Management Script (Updated for v0.55+ Lua Engine)
 
 # Function to handle application focus/launch
 handle_app() {
@@ -44,13 +44,13 @@ handle_app() {
     # Get currently focused window
     local active_address=$(hyprctl activewindow -j | jq -r '.address')
 
-    # If the target window is already focused, do nothing
-    if [ "$target_address" = "$active_address" ]; then
+    # Force both addresses to lowercase to prevent case-mismatch bugs
+    if [ "${target_address,,}" = "${active_address,,}" ]; then
       return 0
     fi
 
-    # Focus the existing window
-    hyprctl dispatch focuswindow "address:$target_address"
+    # FIX: New v0.55+ Lua table syntax for window focusing
+    hyprctl dispatch "hl.dsp.focus({ window = \"address:$target_address\" })"
   else
     # No matching window found, launch the application
     if [ -n "$launch_command" ]; then
@@ -101,13 +101,13 @@ handle_app_partial() {
     # Get currently focused window
     local active_address=$(hyprctl activewindow -j | jq -r '.address')
 
-    # If the target window is already focused, do nothing
-    if [ "$target_address" = "$active_address" ]; then
+    # Force both addresses to lowercase to prevent case-mismatch bugs
+    if [ "${target_address,,}" = "${active_address,,}" ]; then
       return 0
     fi
 
-    # Focus the existing window
-    hyprctl dispatch focuswindow "address:$target_address"
+    # FIX: New v0.55+ Lua table syntax for window focusing
+    hyprctl dispatch "hl.dsp.focus({ window = \"address:$target_address\" })"
   else
     # No matching window found, launch the application
     if [ -n "$launch_command" ]; then
@@ -126,39 +126,32 @@ check_dependencies() {
   if [ ${#missing_deps[@]} -ne 0 ]; then
     echo "Error: Missing required dependencies: ${missing_deps[*]}"
     echo "Please install them using your package manager."
-    echo "For example: sudo pacman -S jq (Arch) or sudo apt install jq (Ubuntu)"
     exit 1
   fi
 }
 
-# Application handlers (equivalent to your AutoHotkey hotkeys)
+# Application handlers
 launch_wezterm_T() {
-  # Match WezTerm with specific title (exact match)
   handle_app "WezTerm(T):WezTerm(T)" "export WEZTERM_WORKSPACE=Home_T && wezterm start --class 'WezTerm(T)' --always-new-process"
 }
 
 launch_wezterm_P() {
-  # Match WezTerm with specific title (exact match)
   handle_app "WezTerm(P):WezTerm(P)" "export WEZTERM_WORKSPACE=Home_P && wezterm start --class 'WezTerm(P)' --always-new-process"
 }
 
 launch_discord() {
-  # Match Discord by class only
   handle_app "equibop" "equibop"
 }
 
 launch_browser() {
-  # Match Zen browser by class
   handle_app "zen" "zen-browser"
 }
 
 launch_file_manager() {
-  # Match file manager by class
   handle_app "org.kde.dolphin" "dolphin"
 }
 
 launch_whatsapp() {
-  # Match WhatsApp with specific title (partial match)
   handle_app_partial "whatsapp-for-linux:WhatsApp" "whatsapp-for-linux"
 }
 
@@ -195,22 +188,10 @@ main() {
     show_window_info
     ;;
   *)
-    echo "Usage: $0 {wezterm|discord|browser|files|whatsapp|spotify|info}"
-    echo "Short forms: {w|d|b|e|g|s|i}"
-    echo ""
-    echo "This script focuses existing windows or launches applications if not found."
-    echo "Use 'info' to see class and title information of current windows."
-    echo "Designed to work with Hyprland on Wayland."
-    echo ""
-    echo "Criteria format examples:"
-    echo "  handle_app \"class_name\" \"command\"           # Match by class only"
-    echo "  handle_app \"class_name:exact_title\" \"command\" # Match class + exact title"
-    echo "  handle_app \":title\" \"command\"               # Match by title only"
-    echo "  handle_app_partial \"class:partial\" \"command\" # Match class + partial title"
+    echo "Usage: $0 {wezterm|discord|browser|files|whatsapp|info}"
     exit 1
     ;;
   esac
 }
 
-# Run main function with all arguments
 main "$@"
