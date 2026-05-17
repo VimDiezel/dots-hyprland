@@ -66,7 +66,7 @@ hl.window_rule({ match = { title = "^([Pp]icture[-\\s]?[Ii]n[-\\s]?[Pp]icture)(.
 hl.window_rule({ match = { class = "^()$", title = "^()$" }, no_blur = true })
 
 -- Disable blur for every window
-hl.window_rule({ match = { class = ".*" }, no_blur = true })
+-- hl.window_rule({ match = { class = ".*" }, no_blur = true })
 
 -- Floating
 hl.window_rule({match = {title = "^(Open File)(.*)$" },                         center = true})
