@@ -216,12 +216,12 @@ hl.bind("SUPER + Left", hl.dsp.exec_cmd("playerctl previous"), { locked = true, 
 hl.bind(
 	"SUPER + Up",
 	hl.dsp.exec_cmd("playerctl --player=mpd volume 0.05+"),
-	{ locked = true, description = "Misc: Increase Music volume" }
+	{ locked = true, repeating = true, description = "Misc: Increase Music volume" }
 )
 hl.bind(
 	"SUPER + Down",
 	hl.dsp.exec_cmd("playerctl --player=mpd volume 0.05-"),
-	{ locked = true, description = "Misc: Decrease Music volume" }
+	{ locked = true, repeating = true, description = "Misc: Decrease Music volume" }
 )
 hl.bind(
 	"SUPER + SHIFT + P",
@@ -240,6 +240,11 @@ hl.bind("ALT + XF86AudioMute", hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_SOURCE@ 
 hl.bind("XF86AudioMicMute", hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_SOURCE@ toggle"), { locked = true })
 hl.bind(
 	"SUPER + ALT + M",
+	hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_SOURCE@ toggle"),
+	{ locked = true, description = "Media: Toggle mic" }
+)
+hl.bind(
+	"F7",
 	hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_SOURCE@ toggle"),
 	{ locked = true, description = "Media: Toggle mic" }
 )
