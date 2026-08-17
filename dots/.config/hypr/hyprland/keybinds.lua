@@ -578,6 +578,11 @@ hl.bind(
 hl.bind("ALT + SHIFT + CTRL + T", hl.dsp.exec_cmd("pypr toggle spotify"), { description = "App: Scratchpad Spotify" })
 hl.bind("SUPER + W", hl.dsp.exec_cmd("pypr toggle term"), { description = "App: Scratchpad Terminal" })
 hl.bind("SUPER + R", hl.dsp.exec_cmd("pypr toggle yazi"), { description = "App: Scratchpad Yazi" })
+hl.bind(
+	"SUPER + SHIFT + ALT + K",
+	hl.dsp.exec_cmd("~/.config/hypr/hyprland/scripts/toggle_kanata.sh"),
+	{ description = "Toggle Kanata" }
+)
 
 --#Discord
 hl.bind("PAGE_UP", hl.dsp.exec_cmd("equibop '--toggle-mic'")) -- # [hidden]
