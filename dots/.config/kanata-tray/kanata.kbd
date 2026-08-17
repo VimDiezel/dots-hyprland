@@ -30,6 +30,19 @@
   mbspc (tap-hold $tap-time $hold-time bspc @hbspc)
   uns (multi S--)
 
+  ;; MOUESE
+  mwu (mwheel-up 50 120)
+  mwd (mwheel-down 50 120)
+  mwl (mwheel-left 50 120)
+  mwr (mwheel-right 50 120)
+
+  msu (movemouse-up 1 1)
+  msl (movemouse-left 1 1)
+  msd (movemouse-down 1 1)
+  msr (movemouse-right 1 1)
+  
+  slw (movemouse-speed 50)
+
   ;; MACROS
   enmo (macro S-RS-(20 c))
   enmog (macro S-RS-(20 g))
@@ -68,7 +81,7 @@
   prv M-left
   vup M-up
   vdw M-down
-  pp M-S-C-p
+  pp M-S-p
 
   ;; MULTI ACTIONS
   mov (multi (layer-switch mouse) f8)
@@ -80,12 +93,14 @@
   ;; LAYERS 
   bse (layer-switch base)
   gam (layer-switch gaming)
+  tmos (layer-toggle mouse)
   mos (layer-switch mouse)
   arr (layer-toggle arrows)
   num (layer-toggle num)
   wm (layer-toggle wm)
   moa (layer-toggle media)
 
+  mutom (tap-hold $tap-time $hold-time f7 @tmos)
   mntoh (tap-hold $tap-time $hold-time @mflo @mov)
   lam (tap-hold $tap-time $hold-time f3 @moa)
   fwm (tap-hold $tap-time $hold-time f9 @num)
@@ -98,7 +113,7 @@
   _      _    _    _    _    _    _    _    _    _    _    @obr @cbr @fsl   del
   @cape  @a   @s   @d   @f   _    _    @j   @k   @l   @;   @ap  _           pgup
   @lam   _    _    @c   @v   _    _    _    @co  @fu  @bsl   @mbspc   _
-  @mntoh     f7    @fwm           @spc           @num _    _       _  _  _
+  @mntoh     @mutom    @fwm           @spc           @num _    _       _  _  _
 )
 
 (deflayer arrows
@@ -140,9 +155,9 @@
 (deflayer mouse
   _     _    _    _    _    _    _    _    _    _    _    _    @gam
   XX    XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   _  @capb    home
-  _     _    _    _    _    _    _    _    _    _    _    @[   _    _      del
-  @capb _    _    _    _    _    _    _    _    _    _    _    _           pgup
-  @lam  _    _    _    _    _    @1shot    _    _    _    _    bspc   XX
+  _     _    _    @mwu _    _    _    _    _    _    _    @[   _    _      del
+  @capb @slw @mwl @mwd @mwr _    @msl @msd @msu @msr  _    _    _           pgup
+  @lam  _    _    _    _    _    mltp mmtp mrtp _    _    bspc   XX
   @capb      f7    @fwm           _              _    _    _       XX XX XX
 )
 
