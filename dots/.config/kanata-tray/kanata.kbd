@@ -7,12 +7,11 @@
 
 
 (defsrc
-  esc   f1   f2   f3   f4   f5   f6   f7   f8   f9   f10  f11  f12
-  grv   1    2    3    4    5    6    7    8    9    0    -    =     bspc    home
+  esc   1    2    3    4    5    6    7    8    9    0    -    =     bspc    ins
   tab   q    w    e    r    t    y    u    i    o    p    [    ]     \       del
   caps  a    s    d    f    g    h    j    k    l    ;    '     ret          pgup
-  lsft  z    x    c    v    b    n    m    ,    .    /     rsft     up
-  lctl  lmet lalt           spc               ralt  rmet  rctl left down right
+  lsft  z    x    c    v    b    n    m    ,    .    /     rsft     up       pgdn
+  lctl  lmet lalt           spc               ralt  rctl       left down right
 )
 
 (defvar
@@ -108,64 +107,57 @@
 )
 
 (deflayer base
-  _      _    _    _    _    _    _    _    _    _    _    _    @gam
-  XX     XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   f16    home
-  _      _    _    _    _    _    _    _    _    _    _    @obr @cbr @fsl   del
-  @cape  @a   @s   @d   @f   _    _    @j   @k   @l   @;   @ap  _           pgup
-  @lam   _    _    @c   @v   _    _    _    @co  @fu  @bsl   @mbspc   _
-  @mntoh     @mutom    @fwm           @spc           @num _    _       _  _  _
+  XX     XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   f16     @gam
+  _      _    _    _    _    _    _    _    _    _    _    @obr @cbr @fsl    del
+  @cape  @a   @s   @d   @f   _    _    @j   @k   @l   @;   @ap  _            pgup
+  @lam   _    _    @c   @v   _    _    _    @co  @fu  @bsl   @mbspc   _      pgdn
+  @mntoh     @mutom    @fwm           @spc           @num    _     _  _  _
 )
 
 (deflayer arrows
-  _     _    _    _    _    _    _    _    _    _    _    _    _
-  XX    XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX     XX    home
-  _     _    _    _    _    _    _    _    _    _    _    _    _      _     del
-  _     @a   @s   @d   @f   _    left down up  right _    _    _            pgup
-  @lam  _    _    _    _    _    _    _    _   _     _   bspc        XX
-  _    f7   @fwm              @spc          @num _    _           XX XX XX
+  XX    XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX     XX     @gam
+  _     _    _    _    _    _    _    _    _    _    _    _    _      _      del
+  _     @a   @s   @d   @f   _    left down up  right _    _    _             pgup
+  @lam  _    _    _    _    _    _    _    _   _     _   bspc        XX      pgdn
+  _    f7   @fwm              @spc          @num     _            XX XX XX
 )
 
 (deflayer num
-  _      _    _    _    _    _    _    _    _    _    _    _    @gam
-  XX     XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX     @capb       home
-  _      _    _    _    @uns A-M-C-t   _    7    8    9    _    _    _    _        del
-  @cape  @a   @s   @d   .    `         -    4    5    6    +    =    _             pgup
-  @lam   0    _    ,    S-\  \         @uns 1    2    3    0     bspc XX
-  @capb       f7    @fwm          @spc              _    _    _    XX XX XX
+  XX     XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX     @capb  @gam
+  _      _    _    _    @uns A-M-C-t   _    7    8    9    _    _    _    _   del
+  @cape  @a   @s   @d   .    `         -    4    5    6    +    =    _        pgup
+  @lam   0    _    ,    S-\  \         @uns 1    2    3    0     bspc XX      pgdn
+  @capb       f7    @fwm          @spc              _    _         XX XX XX
 )
 
 (deflayer wm
-  _      _         _        _        _     _    _    _    _    _    _    _    @gam
-  XX     XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX     @capb                          home
+  XX     XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX     @capb                          @gam
   _      M-c       A-S-C-w  A-S-C-e  A-S-r   A-S-C-t  A-S-e      _    _    _     XX  @[   _    _      del
   @cape  _         A-S-C-t     M-d      _       A-4      A-S-C-g    _    _    A-S-C-;   _    _    _   pgup
-  @lam   _         _        A-S-C-d  _       A-S-C-b  _          _    _    _    _    bspc    XX
-  @capb       f7    @fwm           @spc              _    _    _                          XX XX XX
+  @lam   _         _        A-S-C-d  _       A-S-C-b  _          _    _    _    _    bspc    XX       pgdn
+  @capb       f7    @fwm           @spc                    _    _                         XX XX XX
 )
 
 (deflayer gaming
-  esc   f1   f2   f3   f4   f5   f6   f7   f8   f9   f10  f11  @bse
-  grv   1    2    3    4    5    6    7    8    9    0    -    =     XX    home
-  tab   q    w    e    r    t    y    u    i    o    p    [    ]     \     del 
+  grv   1    2    3    4    5    6    7    8    9    0    -    =     XX    @bse
+  tab   q    w    e    r    t    y    u    i    o    p    [    ]     \     del
   lctl  a    s    d    f    g    h    j    k    l    ;    '     ret        pgup
-  lsft  z    x    c    v    b    n    m    ,    .    /     bspc   _
-  f3    f7  lalt           spc               ralt  rmet  rctl   _ _ _
+  lsft  z    x    c    v    b    n    m    ,    .    /     bspc   _        pgdn
+  f3    f7  lalt           spc               ralt    rctl       _ _ _
 )
 
 (deflayer mouse
-  _     _    _    _    _    _    _    _    _    _    _    _    @gam
-  XX    XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   _  @capb    home
+  XX    XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   _  @capb    @bse
   _     _    _    @mwu _    _    _    _    _    _    _    @[   _    _      del
-  @capb @slw @mwl @mwd @mwr _    @msl @msd @msu @msr  _    _    _           pgup
-  @lam  _    _    _    _    _    mltp mmtp mrtp _    _    bspc   XX
-  @capb      f7    @fwm           _              _    _    _       XX XX XX
+  @capb @slw @mwl @mwd @mwr _    @msl @msd @msu @msr  _    _    _          pgup
+  @lam  _    _    _    _    _    mltp mmtp mrtp _    _    bspc   XX        pgdn
+  @capb      f7    @fwm           _              _     _      XX XX XX
 )
 
 (deflayer media
-  _     _    _    _    _    _    _    _    _    _    _    _    @gam
-  XX    XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX     home
+  XX    XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX     ins
   _     _    f23  @vup f21  _    prev vold volu next pp   _    _    _      del
   @cape _    @prv @vdw @nex f20  @prv @vdw @vup @nex f23  _    _           pgup
-  @lam  _    _    _    _    _    _    mute  _    _    _    bspc       XX
-  _       f7    @fwm           @pp              _    _    _        XX XX XX
+  @lam  _    _    _    _    _    _    mute  _    _    _    bspc       XX   pgdn
+  _       f7    @fwm           @pp              _        _         XX XX XX
 )
