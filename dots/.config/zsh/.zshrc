@@ -29,6 +29,7 @@ eval "$(starship init zsh)"
 clear-shell() {
   clear
   pokeget --hide-name random
+  # command -v pokeget &>/dev/null && pokeget --hide-name random
 
   if [[ -n $WIDGET ]]; then
     BUFFER=""
@@ -50,10 +51,13 @@ fcd() {
     | sed "s|^$HOME|~|" \
     | fzf --border \
       --prompt="📁 ~ > " \
-      --preview 'eza -lah --icons --color=always --group-directories-first --git $(echo {} | sed "s|^~|$HOME|")' \
+      --preview 'eza -lah --icons --color=always --group-directories-first --git -- "$(sed "s|^~|$HOME|" <<< {})"' \
       --preview-window=right:50%:wrap \
-      --bind 'ctrl-/:toggle-preview') || return
-  cd "${dir/#\~/$HOME}" || return
+      --bind 'ctrl-/:toggle-preview')
+
+  if [[ -n "$dir" ]]; then
+    cd -- "${dir/#\~/$HOME}" || return
+  fi
   clear-shell
 }
 
@@ -68,32 +72,50 @@ fcdn() {
     | sed "s|^$HOME|~|" \
     | fzf --border \
       --prompt="📁 ~ > " \
-      --preview 'eza -lah --icons --color=always --group-directories-first --git $(echo {} | sed "s|^~|$HOME|")' \
+      --preview 'eza -lah --icons --color=always --group-directories-first --git -- "$(sed "s|^~|$HOME|" <<< {})"' \
       --preview-window=right:50%:wrap \
-      --bind 'ctrl-/:toggle-preview') || return
-  cd "${dir/#\~/$HOME}" || return
+      --bind 'ctrl-/:toggle-preview')
+
+  if [[ -n "$dir" ]]; then
+    cd -- "${dir/#\~/$HOME}" || return
+    nvim
+  fi
   clear-shell
-  nvim
 }
 
 # Create a ZLE widget that fuzzy search command history
 fzf-history-widget() {
+  emulate -L zsh
+  setopt localoptions noglobsubst noposixbuiltins pipefail no_aliases extendedglob
+
   local selected
-  selected=$(fc -rl 1 | fzf --tac --no-sort \
-    --height=40% \
-    --border \
-    --prompt="History ❯ " \
-    --query="$LBUFFER" \
-    --color=prompt:#c4a7e7)
+  selected=$(
+    fc -rl 1 |
+      fzf --no-sort \
+          --tiebreak=index \
+          --height=40% \
+          --border \
+          --prompt='History ❯ ' \
+          --query="$LBUFFER" \
+          --bind='ctrl-r:toggle-sort' \
+          --color='prompt:#c4a7e7'
+  ) || { zle redisplay; return 0 }
 
-  if [[ -n "$selected" ]]; then
-    LBUFFER=$(echo "$selected" | sed 's/^[[:space:]]*[0-9]\+[[:space:]]*//')
-  fi
+  [[ -n $selected ]] || { zle redisplay; return 0 }
 
+  # strip: leading space, history number, optional '*', trailing space
+  selected=${selected##[[:space:]]#}
+  selected=${selected##[0-9]##}
+  selected=${selected#\*}
+  selected=${selected##[[:space:]]#}
+
+  BUFFER=$selected
+  CURSOR=$#BUFFER
   zle redisplay
 }
 zle -N fzf-history-widget
-bindkey '^R' fzf-history-widget
+bindkey -M viins '^R' fzf-history-widget
+bindkey -M vicmd '^R' fzf-history-widget
 
 
 #  ┬  ┌─┐┌─┐┌┬┐  ┌─┐┌┐┌┌─┐┬┌┐┌┌─┐
@@ -193,6 +215,7 @@ source /usr/share/zsh/plugins/zsh-history-substring-search/zsh-history-substring
 #  ├─┤│  │├─┤└─┐
 #  ┴ ┴┴─┘┴┴ ┴└─┘
 alias cs="clear-shell"
+alias c="fcd"
 alias cn="fcdn"
 alias vim="nvim"
 alias cat="bat --theme=base16"
